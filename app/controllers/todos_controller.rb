@@ -6,13 +6,24 @@ class TodosController < ApplicationController
   end
 
   def create
-    @todos = Todo.create(params[:post])
-    respond_with @todos
+    @todo = Todo.create(todo_params)
+    if @todo.save
+      respond_with @todo
+    else 
+      puts "*" *500
+      render json: { errors: @todo.errors.full_messages }
+    end
   end
 
   def update
-    @todos = Todo.update(params[:update])
-    respond_with @todos
+    @todo = Todo.update(todo_params)
+    respond_with @todo
+  end
+
+  private
+
+  def todo_params
+    params.require(:todo).permit(:name, :user_id)
   end
 
 end
