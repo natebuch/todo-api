@@ -1,7 +1,7 @@
 class TodosController < ApplicationController
 
   def index
-    @todos = Todo.all
+    @todos = Todo.descending
     respond_with @todos
   end
 
@@ -16,14 +16,15 @@ class TodosController < ApplicationController
   end
 
   def update
-    @todo = Todo.update(todo_params)
+    @todo = Todo.find(params[:id])
+    @todo.update_attributes(todo_params)
     respond_with @todo
   end
 
   private
 
   def todo_params
-    params.require(:todo).permit(:name, :user_id)
+    params.require(:todo).permit(:name, :user_id, :is_complete)
   end
 
 end
