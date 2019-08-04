@@ -7,6 +7,7 @@ json.todos @todos do |todo|
   json.is_complete todo.is_complete
   
   json.comments todo.comments do |comment|
+    json.id comment.id
     json.text comment.text
     json.status comment.status
   end
